@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="stylesheet" href="style.css" />
+    <title>Document</title>
+  </head>
+  <body class="column">
+    <h1 class="headline-1 wavy">Playfair Cipher</h1>
+    <div class="row expand">
+      <div class="column box expand">
+        <h2 class="headline-2">Encryption</h2>
+        <div class="form expand">
+          <div class="form-control">
+            <label class="headline-3" for="plaintext">Plaintext :</label>
+            <input
+              class="input"
+              id="plainText"
+              type="text"
+              placeholder="Add Plain Text Here....."
+            />
+          </div>
+          <button class="btn" id="plainTextButton">Show Cipher Text</button>
+        </div>
+        <div id="encryptSlices"></div>
+        <div class="result row">
+          <h2 class="headline-3">Result :</h2>
+          <p class="headline-3 chip" id="plainResult"></p>
+        </div>
+      </div>
+      <div class="column box expand">
+        <h2 class="headline-2">Decryption</h2>
+        <div class="form expand">
+          <div class="form-control">
+            <label class="headline-3" for="ciphertext">Ciphertext :</label>
+            <input
+              class="input"
+              id="cipherText"
+              type="text"
+              placeholder="Add Cipher Text Here....."
+            />
+          </div>
+          <button class="btn" id="cipherTextButton">Show Plain Text</button>
+        </div>
+        <div id="decryptSlices"></div>
+        <div class="result row">
+          <h2 class="headline-3">Result :</h2>
+          <p class="headline-3 chip" id="cipherResult"></p>
+        </div>
+      </div>
+    </div>
+    <script src="script.js"></script>
+  </body>
+</html>
