@@ -50,6 +50,7 @@ body {
   box-shadow: 10px 10px 25px -12px rgba(0, 0, 0, 0.1),
     -10px -10px 25px -12px rgba(0, 0, 0, 0.1);
   margin: 5rem;
+  margin-top: 3rem;
   border-radius: 15px;
   color: rgba(0, 0, 0, 0.685);
   background-color: white;
@@ -216,4 +217,36 @@ label {
   background-color: transparent;
   color: rgba(0, 0, 0, 0.685);
   transform: translateY(5px);
+}
+
+table {
+  width: 40%;
+  margin: auto;
+  margin-top: 2rem;
+}
+
+table,
+tr,
+td {
+  border-collapse: collapse;
+  border-spacing: 0;
+  border: 2px solid #ddd;
+  margin-bottom: 2rem;
+  border-radius: 10px;
+  font-size: 12px;
+  text-align: center;
+  color: white;
+}
+
+td input {
+  width: 100%;
+  border: none;
+  outline: none;
+  border-radius: 0.5rem;
+  padding: 0 1rem;
+  font-weight: 700;
+  color: white;
+  background-color: transparent;
+  transition: all 0.3s ease;
+  text-align: center;
 }

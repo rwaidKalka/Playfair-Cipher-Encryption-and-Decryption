@@ -12,26 +12,34 @@ const decryptSlices = document.getElementById("decryptSlices");
 
 // on show cipher text button clicked
 plainTextButton.addEventListener("click", () => {
+  assignMatrix();
   const cipherText = encryptPlayfairCipher(plainText.value.trim());
   plainTextResult.innerText = cipherText;
-  scrollToEnd();
 });
 
 // on show plain text button clicked
 cipherTextButton.addEventListener("click", () => {
+  assignMatrix();
   const plainText = decryptPlayfairCipher(cipherText.value.trim());
   cipherTextResult.innerText = plainText;
-  scrollToEnd();
 });
 
-const matrix = [
-  ["L", "G", "D", "B", "A"],
-  ["Q", "M", "H", "E", "C"],
-  ["U", "R", "N", "I/J", "F"],
-  ["X", "V", "S", "O", "K"],
-  ["Z", "Y", "W", "T", "P"],
-];
+let matrix = [];
 
+///Thiis function will take the inputs from the ui and assign the matrix
+function assignMatrix() {
+  matrix = [
+    [...document.querySelectorAll(".row1")].map((x) => x.value.toUpperCase()),
+    [...document.querySelectorAll(".row2")].map((x) => x.value.toUpperCase()),
+    [...document.querySelectorAll(".row3")].map((x) => x.value.toUpperCase()),
+    [...document.querySelectorAll(".row4")].map((x) => x.value.toUpperCase()),
+    [...document.querySelectorAll(".row5")].map((x) => x.value.toUpperCase()),
+  ];
+}
+
+assignMatrix();
+
+//This function will check if matrix contains the letter
 function matrixContains(letter) {
   for (let i = 0; i < matrix.length; i++) {
     for (let j = 0; j < matrix[i].length; j++) {
@@ -46,11 +54,12 @@ function matrixContains(letter) {
   return false;
 }
 
-// remove String letter at specified index
+// This function will remove the letter at the given index from the string
 function removeAt(str, idx) {
   return str.substr(0, idx) + str.substr(idx + 1);
 }
 
+//This function will get the slices of letters from text
 function getLetterSlices(text, isEncrypt = true) {
   let newText = "";
   //Check for validation by removing spaces and symbols from the text only letters remains
@@ -69,6 +78,7 @@ function getLetterSlices(text, isEncrypt = true) {
         // if current letter is equal to next letter then a bogus letter X is inserted between them
         if (currentLetter == nextLetter) {
           correctText += currentLetter + "X";
+          //Removing the next letter and starting from previous letter so it wont check for duplicate again
           newText = removeAt(newText, i + 1);
           i = i - 1;
         } else {
@@ -78,7 +88,9 @@ function getLetterSlices(text, isEncrypt = true) {
         correctText += currentLetter;
       }
     }
-  } else {
+  }
+  // if is decryption we wont check for duplicate letters because maybe they are not with same slice for example
+  else {
     correctText = newText;
   }
   //if the length of text is odd then a bogus letter X is inserted at the end
@@ -155,7 +167,11 @@ function encryptPlayfairCipher(text) {
     }</span> <p class="largeFont">➡</p> <span>${newLetters}</span></div>`;
   }
 
-  return encryptedArray.join("").replaceAll("I/J", "I");
+  let newText = getCorrectTextWithoutX(
+    encryptedArray.join("").replaceAll("I/J", "I").replaceAll("J/I", "I")
+  );
+
+  return newText;
 }
 
 //Decrypts the cipher text
@@ -163,7 +179,7 @@ function decryptPlayfairCipher(text) {
   //reset UI from prevoius result
   decryptSlices.innerHTML = "";
   //get slices of text
-  const letterSlices = getLetterSlices(text, false);
+  const letterSlices = getLetterSlices(text);
 
   const decryptedArray = [];
   for (let i = 0; i < letterSlices.length; i++) {
@@ -217,7 +233,7 @@ function decryptPlayfairCipher(text) {
   }
 
   let generatedText = decryptedArray.join("");
-  generatedText = generatedText.replaceAll("I/J", "I");
+  generatedText = generatedText.replaceAll("I/J", "I").replaceAll("J/I", "I");
 
   let newText = getCorrectTextWithoutX(generatedText);
 
@@ -233,7 +249,6 @@ function getCorrectTextWithoutX(text) {
       if (currentLetter == "X" && i > 0 && i < text.length - 1) {
         const prevLetter = text[i - 1].toUpperCase();
         const nextLetter = text[i + 1].toUpperCase();
-
         if (prevLetter == nextLetter) {
           correctText += "";
         } else {
@@ -248,12 +263,4 @@ function getCorrectTextWithoutX(text) {
   } else {
     return text;
   }
-}
-
-function scrollToEnd() {
-  window.scrollTo({
-    left: 0,
-    top: document.body.scrollHeight,
-    behavior: "smooth",
-  });
 }
